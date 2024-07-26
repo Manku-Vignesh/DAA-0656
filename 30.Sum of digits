@@ -1,0 +1,24 @@
+#include <stdio.h>
+int sumOfDigits(int num) {
+    int sum = 0;
+    while (num != 0) {
+        sum += num % 10;
+        num /= 10;
+    }
+    return sum;
+}
+
+int main() {
+    char name[] = "M.Vignesh";
+    char regno[] = "192211849";
+    printf("Name : %s\n", name);
+    printf("Regno : %s\n\n", regno);
+
+    int num;
+    printf("Enter a number: ");
+    scanf("%d", &num);
+
+    printf("Sum of digits is: %d\n", sumOfDigits(num));
+
+    return 0;
+}
