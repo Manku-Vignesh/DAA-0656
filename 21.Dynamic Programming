@@ -1,0 +1,38 @@
+#include <stdio.h>
+#include <limits.h>
+void optimalBST(int keys[], int freq[], int n);
+int main() {
+    printf("Name : M,Vignesh\n");
+    printf("Reg no : 192211849\n");
+    int keys[] = {10, 12, 20}; 
+    int freq[] = {34, 8, 50};  
+    int n = sizeof(keys) / sizeof(keys[0]); 
+    optimalBST(keys, freq, n);
+    return 0;
+}
+void optimalBST(int keys[], int freq[], int n) {
+    int cost[n][n]; 
+    int sum[n][n]; 
+    for (int i = 0; i < n; i++) {
+        cost[i][i] = freq[i];
+        sum[i][i] = freq[i];
+        for (int j = i + 1; j < n; j++) {
+            sum[i][j] = sum[i][j - 1] + freq[j];
+        }
+    }
+    for (int length = 2; length <= n; length++) {
+        for (int i = 0; i <= n - length; i++) {
+            int j = i + length - 1;
+            cost[i][j] = INT_MAX;
+            for (int r = i; r <= j; r++) {
+                int c = ((r > i) ? cost[i][r - 1] : 0) + 
+                        ((r < j) ? cost[r + 1][j] : 0) + 
+                        sum[i][j];
+                if (c < cost[i][j]) {
+                    cost[i][j] = c;
+                }
+            }
+        }
+    }
+    printf("Cost of the Optimal Binary Search Tree is: %d\n", cost[0][n - 1]);
+}
