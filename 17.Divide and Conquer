@@ -1,0 +1,41 @@
+#include <stdio.h>
+#include <limits.h>
+void findMaxMin(int arr[], int low, int high, int *max, int *min);
+void printMaxMin(int arr[], int size);
+int main() {
+    printf("Name : M.Vignesh\n");
+    printf("Reg no : 192211849\n");
+    int arr[] = {3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5};
+    int size = sizeof(arr) / sizeof(arr[0]);
+    printMaxMin(arr, size);
+    return 0;
+}
+void findMaxMin(int arr[], int low, int high, int *max, int *min) {
+    if (low == high) {
+        *max = arr[low];
+        *min = arr[low];
+        return;
+    }
+    if (high == low + 1) {
+        if (arr[low] > arr[high]) {
+            *max = arr[low];
+            *min = arr[high];
+        } else {
+            *max = arr[high];
+            *min = arr[low];
+        }
+        return;
+    }
+    int mid = (low + high) / 2;
+    int leftMax, leftMin, rightMax, rightMin;
+    findMaxMin(arr, low, mid, &leftMax, &leftMin);
+    findMaxMin(arr, mid + 1, high, &rightMax, &rightMin);
+    *max = (leftMax > rightMax) ? leftMax : rightMax;
+    *min = (leftMin < rightMin) ? leftMin : rightMin;
+}
+void printMaxMin(int arr[], int size) {
+    int max, min;
+    findMaxMin(arr, 0, size - 1, &max, &min);
+    printf("Maximum value: %d\n", max);
+    printf("Minimum value: %d\n", min);
+}
