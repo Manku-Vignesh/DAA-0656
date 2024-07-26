@@ -1,0 +1,49 @@
+#include <stdio.h>
+typedef struct {
+    int weight;
+    int value;
+    double ratio; 
+} Item;
+void calculateMaxValue(Item items[], int numItems, int capacity);
+void swap(Item *a, Item *b);
+int main() {
+    printf("Name : M . Vignesh\n");
+    printf("Reg no : 192211849\n");
+    Item items[] = {
+        {10, 60}, 
+        {20, 100},
+        {30, 120}
+    };
+    int numItems = sizeof(items) / sizeof(items[0]);
+    int capacity = 50; // 
+    calculateMaxValue(items, numItems, capacity);
+    return 0;
+}
+void swap(Item *a, Item *b) {
+    Item temp = *a;
+    *a = *b;
+    *b = temp;
+}
+void calculateMaxValue(Item items[], int numItems, int capacity) {
+    for (int i = 0; i < numItems; i++) {
+        items[i].ratio = (double) items[i].value / items[i].weight;
+    }
+    for (int i = 0; i < numItems - 1; i++) {
+        for (int j = i + 1; j < numItems; j++) {
+            if (items[i].ratio < items[j].ratio) {
+                swap(&items[i], &items[j]);
+            }
+        }
+    }
+    double maxValue = 0.0;
+    int remainingCapacity = capacity;
+    for (int i = 0; i < numItems; i++) {
+        if (remainingCapacity == 0) {
+            break;
+        }
+        int weightToTake = (items[i].weight <= remainingCapacity) ? items[i].weight : remainingCapacity;
+        maxValue += weightToTake * items[i].ratio;
+        remainingCapacity -= weightToTake;
+    }
+    printf("Maximum value in the knapsack: %.2f\n", maxValue);
+}
