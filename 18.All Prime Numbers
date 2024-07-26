@@ -1,0 +1,35 @@
+#include <stdio.h>
+#include <stdbool.h>
+#define MAX_LIMIT 1000 
+void printPrimes(int limit);
+int main() {
+    printf("Name : M.Vignesh\n");
+    printf("Reg no : 192211849\n");
+    printPrimes(MAX_LIMIT);
+    return 0;
+}
+void printPrimes(int limit) {
+    if (limit < 2) {
+        printf("There are no prime numbers less than 2.\n");
+        return;
+    }
+    bool isPrime[limit + 1];
+    for (int i = 0; i <= limit; i++) {
+        isPrime[i] = true;
+    }
+    isPrime[0] = isPrime[1] = false; 
+    for (int p = 2; p * p <= limit; p++) {
+        if (isPrime[p]) {
+            for (int multiple = p * p; multiple <= limit; multiple += p) {
+                isPrime[multiple] = false;
+            }
+        }
+    }
+    printf("Prime numbers up to %d are:\n", limit);
+    for (int num = 2; num <= limit; num++) {
+        if (isPrime[num]) {
+            printf("%d ", num);
+        }
+    }
+    printf("\n");
+}
