@@ -1,0 +1,23 @@
+#include <stdio.h>
+void printPascal(int n) {
+    for (int line = 1; line <= n; line++) {
+        int C = 1;
+        for (int i = 1; i <= line; i++) {
+            printf("%d ", C);
+            C = C * (line - i) / i;
+        }
+        printf("\n");
+    }
+}
+
+int main() {
+    char name[] = "M.Vignesh";
+    char regno[] = "192211849";
+    printf("Name : %s\n", name);
+    printf("Regno : %s\n\n", regno);
+
+    int n = 5;
+    printPascal(n);
+
+    return 0;
+}
