@@ -1,0 +1,57 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+// Structure to represent a product
+struct Product {
+    int id;
+    int value;
+    int space;
+};
+
+// Comparator function to sort products based on value-to-space ratio
+int compare(const void* a, const void* b) {
+    struct Product* prodA = (struct Product*)a;
+    struct Product* prodB = (struct Product*)b;
+    double r1 = (double)prodA->value / prodA->space;
+    double r2 = (double)prodB->value / prodB->space;
+    return (r2 > r1) - (r1 > r2);
+}
+
+// Function to solve the product selection problem using a Greedy algorithm
+void maximizeProductSelection(struct Product products[], int n, int maxSpace) {
+    // Sort products by value-to-space ratio
+    qsort(products, n, sizeof(struct Product), compare);
+
+    int totalValue = 0;
+    int totalSpace = 0;
+
+    printf("Selected products:\n");
+
+    for (int i = 0; i < n; i++) {
+        if (totalSpace + products[i].space <= maxSpace) {
+            totalSpace += products[i].space;
+            totalValue += products[i].value;
+            printf("Product ID: %d, Value: %d, Space: %d\n", products[i].id, products[i].value, products[i].space);
+        }
+    }
+
+    printf("Total value: %d\n", totalValue);
+    printf("Total space used: %d\n", totalSpace);
+}
+
+int main() {
+    // Example input
+    struct Product products[] = {
+        {1, 60, 10},
+        {2, 100, 20},
+        {3, 120, 30},
+        {4, 50, 5},
+        {5, 70, 8}
+    };
+    int n = sizeof(products) / sizeof(products[0]);
+    int maxSpace = 50;
+
+    maximizeProductSelection(products, n, maxSpace);
+
+    return 0;
+}
